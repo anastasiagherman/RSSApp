@@ -17,17 +17,19 @@ class DeployCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        ORM::row_execute("CREATE TABLE IF NOT EXISTS resources(
-                            id int INCREMENT PRIMARY KEY,
+        ORM::raw_execute("CREATE TABLE IF NOT EXISTS resources(
+                            id integer PRIMARY KEY AUTOINCREMENT,
                             name string UNIQUE,
                             url string,
-                            created_at string NOT NULL);
+                            created_at current_date);
         " );
-        ORM::row_execute("CREATE TABLE IF NOT EXISTS articles(
-                            id int INCREMENT PRIMARY KEY,
+        ORM::raw_execute("CREATE TABLE IF NOT EXISTS articles(
+                            id integer PRIMARY KEY AUTOINCREMENT,
+                            resource_name string NOT NULL,
                             title string NOT NULL,
                             content string,
-                            created_at string NOT NULL);
+                            url string NOT NULL,
+                            created_at current_date);
         " );
 
         $output->writeln('<info> Deployed </info>>');

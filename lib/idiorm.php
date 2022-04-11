@@ -1,6 +1,7 @@
 <?php
 
-    /**
+   //based on - https://github.com/j4mie/idiorm/pull/370
+/**
      *
      * Idiorm
      *
@@ -2208,22 +2209,22 @@
         // --------------------- //
         // ---  ArrayAccess  --- //
         // --------------------- //
-
+        #[\ReturnTypeWillChange]
         public function offsetExists($key) {
             return array_key_exists($key, $this->_data);
         }
-
+        #[\ReturnTypeWillChange]
         public function offsetGet($key) {
             return $this->get($key);
         }
-
+        #[\ReturnTypeWillChange]
         public function offsetSet($key, $value) {
             if(is_null($key)) {
                 throw new InvalidArgumentException('You must specify a key/array index.');
             }
             $this->set($key, $value);
         }
-
+        #[\ReturnTypeWillChange]
         public function offsetUnset($key) {
             unset($this->_data[$key]);
             unset($this->_dirty_fields[$key]);
@@ -2445,6 +2446,7 @@
          * Get the number of records in the result set
          * @return int
          */
+        #[\ReturnTypeWillChange]
         public function count() {
             return count($this->_results);
         }
@@ -2454,6 +2456,7 @@
          * over the result set.
          * @return \ArrayIterator
          */
+        #[\ReturnTypeWillChange]
         public function getIterator() {
             return new ArrayIterator($this->_results);
         }
@@ -2463,6 +2466,7 @@
          * @param int|string $offset
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function offsetExists($offset) {
             return isset($this->_results[$offset]);
         }
@@ -2472,6 +2476,7 @@
          * @param int|string $offset
          * @return mixed
          */
+        #[\ReturnTypeWillChange]
         public function offsetGet($offset) {
             return $this->_results[$offset];
         }
@@ -2481,6 +2486,7 @@
          * @param int|string $offset
          * @param mixed $value
          */
+        #[\ReturnTypeWillChange]
         public function offsetSet($offset, $value) {
             $this->_results[$offset] = $value;
         }
@@ -2489,10 +2495,21 @@
          * ArrayAccess
          * @param int|string $offset
          */
-        public function offsetUnset($offset) {
+        #[\ReturnTypeWillChange]
+        public function offsetUnset($offset)
+        {
             unset($this->_results[$offset]);
         }
 
+        public function __serialize()
+        {
+            return $this->serialize();
+        }
+
+        public function __unserialize($data)
+        {
+            $this->unserialize($data);
+        }
         /**
          * Serializable
          * @return string
