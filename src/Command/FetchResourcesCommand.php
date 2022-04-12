@@ -17,8 +17,8 @@ class FetchResourcesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        ArticleRepository::uploadRSS();
-        $output->writeln("<info> Items were added</info>");
+        ArticleRepository::saveArticles();
+        $output->writeln("<info> Items were saved</info>");
         return Command::SUCCESS;
 
     }

@@ -22,4 +22,34 @@ class Article
             $data["created_at"]
         );
     }
+
+
+    public function getResourceName(): string
+    {
+        return $this->resourceName;
+    }
+
+
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+
+    public function getCreatedAt(): ?string
+    {
+        return $this->createdAt;
+    }
+
 }

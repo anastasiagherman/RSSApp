@@ -1,6 +1,7 @@
 <?php
 namespace RSSReader\Command;
 
+use RSSReader\Repository\ArticleRepository;
 use RSSReader\Repository\ResourcesRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,20 +16,16 @@ class ReadResourceCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument("name", InputArgument::REQUIRED);
+        $this->addArgument("res_name", InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $repo = new ResourcesRepository();
-        $resource = $repo->getResourceByName($input->getArgument("name"));
-        if(!$resource){
-            $output->writeln("No such resources");
-            return Command::SUCCESS;
-        }
-        dd($resource);
+        $article = ArticleRepository::readArticleByResource($input->getArgument("res_name"));
+        array_map(fn($article)=>$output->writeln($article->getResourceName() . $article->getUrl() . $article->getTitle()), $article);
 
-       return Command::SUCCESS;
+        return Command::SUCCESS;
 
     }
+
 }

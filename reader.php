@@ -20,5 +20,4 @@ $application->add(new AddResourceCommand());
 $application->add(new ListResourcesCommand());
 $application->add(new ReadResourceCommand());
 $application->add(new FetchResourcesCommand());
-$application->add(new ReadArticlesByResourcesCommand());
 $application->run();
